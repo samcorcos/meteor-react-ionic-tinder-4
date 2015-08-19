@@ -5,7 +5,9 @@ Home = React.createClass({
       y: 0,
       initialX: 0,
       initialY: 0,
-      dragging: "none"
+      dragging: "none",
+      destroyLeft: false,
+      destroyRight: false
     }
   },
   moveCardInit(e) {
@@ -24,11 +26,25 @@ Home = React.createClass({
     })
   },
   moveCardEnd(e) {
-    this.setState({
-      x: 0,
-      y: 0,
-      dragging: "all 0.5s ease"
-    })
+    if (e.changedTouches[0].pageX < 50) {
+      this.setState({
+        x: -1000,
+        y: 0,
+        dragging: "all 0.5s ease"
+      })
+    } else if (e.changedTouches[0].pageX > (window.innerWidth - 50)) {
+      this.setState({
+        x: 1000,
+        y: 0,
+        dragging: "all 0.5s ease"
+      })
+    } else {
+      this.setState({
+        x: 0,
+        y: 0,
+        dragging: "all 0.5s ease"
+      })
+    }
   },
   render() {
     React.initializeTouchEvents(true)
