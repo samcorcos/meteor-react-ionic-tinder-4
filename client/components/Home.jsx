@@ -16,8 +16,8 @@ Home = React.createClass({
     })
   },
   moveCard(e) {
-    deltaX = (e.touches[0].pageX - this.state.initialX) / 2.5;
-    deltaY = (e.touches[0].pageY - this.state.initialY) * 1.2;
+    deltaX = (e.touches[0].pageX - this.state.initialX)
+    deltaY = (e.touches[0].pageY - this.state.initialY)
     this.setState({
       x: deltaX,
       y: deltaY
@@ -33,7 +33,9 @@ Home = React.createClass({
   render() {
     React.initializeTouchEvents(true)
     let cardStyle = {
-      transform: "translate(" + this.state.x + "%," + this.state.y + "%)",
+      transform: "translate(" +
+        this.state.x + "px," +
+        this.state.y + "px)",
       transition: this.state.dragging
     }
     return (
