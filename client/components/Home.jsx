@@ -37,7 +37,7 @@ Card = React.createClass({
       y: 0,
       initialX: 0,
       initialY: 0,
-      dragging: "none"
+      dragging: "none",
     }
   },
   moveCardInit(e) {
@@ -85,6 +85,10 @@ Card = React.createClass({
         this.state.y + "px) " + 
         "rotate(" + this.state.x/4 + "deg)",
       transition: this.state.dragging
+    }
+    if (this.state.x <= -1000 || this.state.x >= 1000) {
+      // so the list continuously moves up ;)
+      cardStyle.marginBottom = '-71px'
     }
     return (
       <div className="card" onTouchStart={this.moveCardInit} onTouchMove={this.moveCard} onTouchEnd={this.moveCardEnd} style={cardStyle}>
