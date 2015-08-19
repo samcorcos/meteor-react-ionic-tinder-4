@@ -36,6 +36,9 @@ Home = React.createClass({
         y: 0,
         dragging: "all 0.5s ease"
       })
+      Meteor.defer(function() {
+        console.log("THIS IS WHERE I WANT TO DESTROY AFTER HALF A SECOND");
+      }, 500)
     } else {
       this.setState({
         x: 0,
