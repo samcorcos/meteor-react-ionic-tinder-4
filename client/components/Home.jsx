@@ -5,9 +5,7 @@ Home = React.createClass({
       y: 0,
       initialX: 0,
       initialY: 0,
-      dragging: "none",
-      destroyLeft: false,
-      destroyRight: false
+      dragging: "none"
     }
   },
   moveCardInit(e) {
