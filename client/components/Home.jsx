@@ -76,7 +76,7 @@ Card = React.createClass({
       transform: "translate(" +
         this.state.x + "px," +
         this.state.y + "px) " +
-        "rotate(" + this.state.x/4 + "deg)",
+        "rotate(" + this.state.x/10 + "deg)",
       transition: this.state.dragging
     }
     if (this.state.x <= -1000 || this.state.x >= 1000) {
@@ -85,7 +85,7 @@ Card = React.createClass({
     return (
       <div className="card" onTouchStart={this.moveCardInit} onTouchMove={this.moveCard} onTouchEnd={this.moveCardEnd} style={cardStyle}>
         <div className="item item-text-wrap">
-          {"This is card id:" + this.props.card.id}
+          {"This is card id: " + this.props.card.id}
         </div>
       </div>
     )
