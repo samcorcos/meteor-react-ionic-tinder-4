@@ -1,9 +1,4 @@
 React.initializeTouchEvents(true)
-// Add listener to get :active pseudoselector working. hack
-document.addEventListener("touchstart", function(){}, false)
-// also need cursor:pointer to work on mobile to touch clic
-
-
 
 Home = React.createClass({
   getInitialState() {
@@ -27,8 +22,6 @@ Home = React.createClass({
     )
   }
 });
-
-
 
 Card = React.createClass({
   getInitialState() {
@@ -82,12 +75,11 @@ Card = React.createClass({
     let cardStyle = {
       transform: "translate(" +
         this.state.x + "px," +
-        this.state.y + "px) " + 
+        this.state.y + "px) " +
         "rotate(" + this.state.x/4 + "deg)",
       transition: this.state.dragging
     }
     if (this.state.x <= -1000 || this.state.x >= 1000) {
-      // so the list continuously moves up ;)
       cardStyle.marginBottom = '-71px'
     }
     return (
