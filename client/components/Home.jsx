@@ -1,27 +1,34 @@
 React.initializeTouchEvents(true)
 
 Home = React.createClass({
-  getInitialState() {
-    return {
-      cards: [{id:1}, {id:2}, {id:3}, {id:4}, {id:5}, {id:6}]
-    }
-  },
-  removeCard(id) {
-    this.setState({cards: this.state.cards.filter((card) =>  card.id != id )})
-  },
+  mixins: [ReactMeteorData],
+  getMeteorData() {
+    let handle = Meteor.subscribe("myData")
+    let data = MyData.find().fetch()
+    return {
+      loading: !handle.ready(),
+      users: data
+    }
+  },
+  removeCard(_id) {
+    MyData.remove(_id)
+  },
   renderCards() {
-    return this.state.cards.map((card) => {
-      return <Card key= {card.id} card={card} remove={()=>this.removeCard(card.id)}/>
+    return this.data.users.map((card) => {
+      return <Card
+        key={card._id}
+        card={card}
+        remove={ () => this.removeCard(card._id)}
+      />
     })
   },
   render() {
-    return (
-      <div>
-        {this.renderCards()}
-      </div>
-    )
+    if (this.data.loading) {
+      return <h1>Loading</h1>
+    }
+    return <div>{this.renderCards()}</div>
   }
-});
+})
 
 Card = React.createClass({
   getInitialState() {
@@ -30,7 +37,7 @@ Card = React.createClass({
       y: 0,
       initialX: 0,
       initialY: 0,
-      dragging: "none",
+      dragging: "none"
     }
   },
   moveCardInit(e) {
@@ -75,8 +82,8 @@ Card = React.createClass({
     let cardStyle = {
       transform: "translate(" +
         this.state.x + "px," +
-        this.state.y + "px) " +
-        "rotate(" + this.state.x/10 + "deg)",
+        this.state.y + "px)" +
+        "rotate("+this.state.x/10 + "deg)",
       transition: this.state.dragging
     }
     if (this.state.x <= -1000 || this.state.x >= 1000) {
@@ -85,7 +92,7 @@ Card = React.createClass({
     return (
       <div className="card" onTouchStart={this.moveCardInit} onTouchMove={this.moveCard} onTouchEnd={this.moveCardEnd} style={cardStyle}>
         <div className="item item-text-wrap">
-          {"This is card id: " + this.props.card.id}
+          {"This is card id: " + this.props.card._id}
         </div>
       </div>
     )
