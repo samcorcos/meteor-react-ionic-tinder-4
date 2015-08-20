@@ -87,12 +87,16 @@ Card = React.createClass({
       transition: this.state.dragging
     }
     if (this.state.x <= -1000 || this.state.x >= 1000) {
-      cardStyle.marginBottom = '-71px'
+      cardStyle.marginBottom = "-" + (document.getElementsByClassName("card")[0].offsetHeight + 20) + "px"
     }
     return (
       <div className="card" onTouchStart={this.moveCardInit} onTouchMove={this.moveCard} onTouchEnd={this.moveCardEnd} style={cardStyle}>
-        <div className="item item-text-wrap">
-          {"This is card id: " + this.props.card._id}
+        <div className="item item-body">
+          <img className="full-image" src={this.props.card.image} />
+        </div>
+        <div className="item">
+          <h2>{this.props.card.name}</h2>
+          <p>{this.props.card.details}</p>
         </div>
       </div>
     )
