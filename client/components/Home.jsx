@@ -13,13 +13,19 @@ Home = React.createClass({
   removeCard(_id) {
     MyData.remove(_id)
   },
+  setAffirmative(_id) {
+    MyData.update({_id}, {$set: { affirmative: true}})
+  },
   renderCards() {
-    return this.data.users.map((card) => {
-      return <Card
-        key={card._id}
-        card={card}
-        remove={ () => this.removeCard(card._id)}
-      />
+    return this.data.users
+      .filter((user) =>  user.affirmative != true)
+      .map((card) => {
+        return <Card
+          key={card._id}
+          card={card}
+          remove={ () => this.removeCard(card._id)}
+          setAffirmative={ () => this.setAffirmative(card._id)}
+        />
     })
   },
   render() {
@@ -69,7 +75,7 @@ Card = React.createClass({
         y: 0,
         dragging: "all 0.5s ease"
       })
-      Meteor.setTimeout(this.props.remove, 500)
+      Meteor.setTimeout(this.props.setAffirmative, 500)
     } else {
       this.setState({
         x: 0,
