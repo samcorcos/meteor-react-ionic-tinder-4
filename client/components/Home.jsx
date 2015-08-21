@@ -12,9 +12,11 @@ Home = React.createClass({
   },
   removeCard(_id) {
     MyData.remove(_id)
+    Meteor.call("repopulate")
   },
   setAffirmative(_id) {
     MyData.update({_id}, {$set: { affirmative: true}})
+    Meteor.call("repopulate")
   },
   renderCards() {
     return this.data.users
