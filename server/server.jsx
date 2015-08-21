@@ -23,5 +23,8 @@ Meteor.methods({
       image: faker.image.people() + "?" + Random.hexString(24),
       details: faker.lorem.sentence()
     })
+  },
+  reset: function() {
+    MyData.remove({affirmative: true});
   }
 })

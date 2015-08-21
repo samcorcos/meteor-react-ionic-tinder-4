@@ -4,3 +4,12 @@
 .card {
   cursor: pointer;
 }
+
+.database-reset-button {
+  border: solid 1px black;
+  background-color: white !important;
+  border-radius: 5px;
+  padding: 1px;
+  display: flex;
+  justify-content: center;
+}
