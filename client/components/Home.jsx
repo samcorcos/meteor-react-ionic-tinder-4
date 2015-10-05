@@ -1,4 +1,6 @@
 React.initializeTouchEvents(true)
+// Add listener to get :active pseudoselector working. hack
+document.addEventListener("touchstart", function(){}, false)
 
 Home = React.createClass({
   mixins: [ReactMeteorData],
@@ -12,9 +14,11 @@ Home = React.createClass({
   },
   removeCard(_id) {
     MyData.remove(_id)
+    Meteor.call("repopulate")
   },
   setAffirmative(_id) {
     MyData.update({_id}, {$set: { affirmative: true}})
+    Meteor.call("repopulate")
   },
   renderCards() {
     return this.data.users
@@ -47,6 +51,7 @@ Card = React.createClass({
     }
   },
   moveCardInit(e) {
+    e.preventDefault();
     this.setState({
       initialX: e.touches[0].pageX,
       initialY: e.touches[0].pageY,
@@ -54,6 +59,7 @@ Card = React.createClass({
     })
   },
   moveCard(e) {
+    e.preventDefault()
     deltaX = (e.touches[0].pageX - this.state.initialX)
     deltaY = (e.touches[0].pageY - this.state.initialY)
     this.setState({
@@ -62,6 +68,7 @@ Card = React.createClass({
     })
   },
   moveCardEnd(e) {
+    e.preventDefault()
     if (e.changedTouches[0].pageX < 50) {
       this.setState({
         x: -1000,
@@ -89,8 +96,13 @@ Card = React.createClass({
       transform: "translate(" +
         this.state.x + "px," +
         this.state.y + "px)" +
-        "rotate("+this.state.x/10 + "deg)",
-      transition: this.state.dragging
+        " rotate("+this.state.x/10 + "deg)",
+      transition: this.state.dragging,
+      WebkitTransform: "translate(" +
+        this.state.x + "px," +
+        this.state.y + "px)" +
+        " rotate("+this.state.x/10 + "deg)",
+      WebkitTransition: this.state.dragging
     }
     if (this.state.x <= -1000 || this.state.x >= 1000) {
       cardStyle.marginBottom = "-" + (document.getElementsByClassName("card")[0].offsetHeight + 20) + "px"
